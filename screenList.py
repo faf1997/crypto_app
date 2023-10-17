@@ -9,8 +9,6 @@ from system import Async
 
 
 
-
-
 Builder.load_string("""
 <PBoxLayout@MDBoxLayout>:
     padding: 20
@@ -34,14 +32,6 @@ Builder.load_string("""
             anchor_y:'bottom'
             padding: 20
             spacing: 20
-            MDCard:
-                md_bg_color: [1,0,0]
-                size_hint: None, None
-                width:100
-                height: 100        
-                MDIconButton:
-                    icon: "android"
-                    elevation:0
 
 """)
 

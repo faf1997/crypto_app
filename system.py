@@ -113,4 +113,4 @@ if __name__ == "__main__":
     while True:
         if sys.is_finish_request_price_cryptos():            
             break
-    # print(sys.get_price_cryptos())
+
