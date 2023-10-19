@@ -70,7 +70,7 @@ class ScreenList(MDScreen):
 
     def func_update_price(self):
         app = MDApp.get_running_app()
-        if app.sys.is_finish_request_price_cryptos():
+        if app.sys.is_finishing_request_price_cryptos():
             self.update_price_widgets(app.sys.get_price_cryptos())
             prices = app.sys.request_price_cryptos()
         

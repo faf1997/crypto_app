@@ -62,7 +62,7 @@ class System:
                             "dogecoin": "DOGEUSDT",
                             "litecoin": "LTCUSDT"
                             }
-        self.__prices: dict = {
+        self.__crypto_prices: dict = { #crypto price
                             "bitcoin": "---",
                             "ethereum": "---",
                             "binance coin": "---",
@@ -74,41 +74,77 @@ class System:
                             "litecoin": "---"
                             }
 
+
+    def get_symbol_crypto(self, name_crypto):
+        '''
+        returns the symbol of the cryptocurrency
+        indicating its name
+        '''
+        return self.__crypto_dict[name_crypto]
+
     @property
     def update_cryptos(self)-> bool:
+        '''
+        check if the cryptocurrency update
+        is activated or deactivated
+        '''
         return self.__crypto_states
 
 
     @update_cryptos.setter
     def update_cryptos(self, value: bool):
+        '''
+        activate and deactivate the updating
+        of cryptocurrency prices
+        '''
         self.__crypto_states = value
 
 
     def get_crypto_names(self)-> list:
+        '''
+        returns a list of the names
+        of the available cryptocurrencies
+        '''
         return [key for key in self.__crypto_dict]
     
 
     def get_crypto_symbols(self)-> list:
+        '''
+        returns a list of symbols available
+        to check cryptocurrency prices on binance
+        '''
         return [self.__crypto_dict[key] for key in self.__crypto_dict]
 
 
-    def get_crypto_dict(self):
-        return self.__crypto_dict.copy()
-
-
     def get_price_cryptos(self):
-        return self.__prices.copy()
+        '''
+        returns a dictionary of cryptocurrency prices,
+        To update prices call
+        self.request_price_cryptos(), and check the
+        update status with self.is_finishing_request_price_cryptos()
+        '''
+        return self.__crypto_prices.copy()
 
 
     def __set_result_request(self,crypto_name, symbol):
-        self.__prices[crypto_name] = f'{get_price_crypto_binance(symbol)}'
+        '''
+        modifies the price of the cryptocurrency
+        upon completion of the asynchronous price query
+        '''
+        self.__crypto_prices[crypto_name] = f'{get_price_crypto_binance(symbol)}'
 
 
-    def is_finish_request_price_cryptos(self):
+    def is_finishing_request_price_cryptos(self):
+        '''
+        Check if the cryptocurrency prices have finished updating
+        '''
         return self.__async.is_finish()
 
 
     def request_price_cryptos(self):
+        '''
+        updates all prices of available cryptocurrencies
+        '''
         if self.update_cryptos:
             dict_prices = {}
             for crypto_name in self.__crypto_dict:
@@ -121,6 +157,6 @@ if __name__ == "__main__":
     sys = System()
     sys.request_price_cryptos()
     while True:
-        if sys.is_finish_request_price_cryptos():            
+        if sys.is_finishing_request_price_cryptos():            
             break
 
