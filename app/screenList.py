@@ -40,9 +40,7 @@ Builder.load_string("""
 
 #-------------------------------------------------------
     MDNavigationLayout:
-
         MDScreenManager:
-
             MDScreen:
                 MDBoxLayout:
                     orientation: 'vertical'
@@ -57,7 +55,6 @@ Builder.load_string("""
                         MDScrollView:
                             MDList:
                                 id: list_data
-
 
 
         MDNavigationDrawer:
@@ -85,11 +82,9 @@ Builder.load_string("""
                         app.sm.current = "screen_config"
                         app.sm.get_screen("screen_list").manager.transition.direction = "left"
                         nav_drawer.set_state("close")
-
-
+                        app.sys.update_cryptos = False
 
 """)
-
 
 
 

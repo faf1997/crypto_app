@@ -54,12 +54,13 @@ class ScreenConfig(MDScreen):
         app = MDApp.get_running_app()
         app.sm.current = "screen_list"
         app.sm.get_screen("screen_list").manager.transition.direction = "right"
+        app.sys.update_cryptos = True
 
 
     def show_confirmation_dialog(self, *args):
             if not self.dialog:
                 self.dialog = MDDialog(
-                    title="Phone ringtone",
+                    title="Select update time",
                     type="confirmation",
                     items=[
                         ItemConfirm(text="1 sec."),
