@@ -11,7 +11,7 @@ from screenList import ScreenList
 class MyApp(MDApp):
     def __init__(self, **kwargs):
         super(MyApp, self).__init__(**kwargs)
-    #theme_cls = ThemeManager()
+        #theme_cls = ThemeManager()
         self.sys = System()
         self.sm = ScreenManager()
         self.sm.add_widget(ScreenList())

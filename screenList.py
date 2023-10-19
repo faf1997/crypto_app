@@ -63,7 +63,7 @@ class ScreenList(MDScreen):
         self.__async.is_finish()
 
 
-    def update_price_widgets(self, dict_cryptos):
+    def update_price_widgets(self, dict_cryptos: dict):
         for key in dict_cryptos:
             self.__widgets_cryptos[key].secondary_text = f'USD {dict_cryptos[key]}'
 

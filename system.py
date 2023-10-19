@@ -40,9 +40,6 @@ class Processing:
             self.processes = {}
         return finish
 
-    
-
-        
         self.results = pool.map(get_price_crypto_binance, symbols)
 
         for result in results:
@@ -52,8 +49,9 @@ class Processing:
 
 class System:
     def __init__(self):
-        self.__async = Async()
-        self.__crypto_dict = { 
+        self.__crypto_states: bool = True
+        self.__async: Async = Async()
+        self.__crypto_dict: dict = {
                             "bitcoin": "BTCUSDT",
                             "ethereum": "ETHUSDT",
                             "binance coin": "BNBUSDT",
@@ -64,7 +62,7 @@ class System:
                             "dogecoin": "DOGEUSDT",
                             "litecoin": "LTCUSDT"
                             }
-        self.__prices = {
+        self.__prices: dict = {
                             "bitcoin": "---",
                             "ethereum": "---",
                             "binance coin": "---",
@@ -76,11 +74,21 @@ class System:
                             "litecoin": "---"
                             }
 
-    def get_crypto_names(self):
+    @property
+    def update_cryptos(self)-> bool:
+        return self.__crypto_states
+
+
+    @update_cryptos.setter
+    def update_cryptos(self, value: bool):
+        self.__crypto_states = value
+
+
+    def get_crypto_names(self)-> list:
         return [key for key in self.__crypto_dict]
     
 
-    def get_crypto_symbols(self):
+    def get_crypto_symbols(self)-> list:
         return [self.__crypto_dict[key] for key in self.__crypto_dict]
 
 
@@ -95,15 +103,17 @@ class System:
     def __set_result_request(self,crypto_name, symbol):
         self.__prices[crypto_name] = f'{get_price_crypto_binance(symbol)}'
 
+
     def is_finish_request_price_cryptos(self):
         return self.__async.is_finish()
 
 
     def request_price_cryptos(self):
-        dict_prices = {}
-        for crypto_name in self.__crypto_dict:
-            symbol = self.__crypto_dict[crypto_name]
-            self.__async.add_job(crypto_name, lambda: self.__set_result_request(crypto_name, symbol))
+        if self.update_cryptos:
+            dict_prices = {}
+            for crypto_name in self.__crypto_dict:
+                symbol = self.__crypto_dict[crypto_name]
+                self.__async.add_job(crypto_name, lambda: self.__set_result_request(crypto_name, symbol))
 
 
 
