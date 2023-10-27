@@ -68,11 +68,6 @@ class ScreenConfig(MDScreen):
                         ItemConfirm(text="30 sec."),
                         ItemConfirm(text="1 min."),
                         ItemConfirm(text="5 min."),
-                        # ItemConfirm(text="6"),
-                        # ItemConfirm(text="7"),
-                        # ItemConfirm(text="8"),
-                        # ItemConfirm(text="9"),
-                        # ItemConfirm(text="10"),
                     ],
                     buttons=[
                         MDFlatButton(

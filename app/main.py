@@ -5,8 +5,10 @@ from kivymd.uix.list import TwoLineListItem
 
 from system import System
 
+from splashScreen import SplashScreen
 from screenList import ScreenList
 from screenConfig import ScreenConfig
+
 
 
 class MyApp(MDApp):
@@ -15,6 +17,7 @@ class MyApp(MDApp):
         #theme_cls = ThemeManager()
         self.sys = System()
         self.sm = ScreenManager()
+        self.sm.add_widget(SplashScreen())
         self.sm.add_widget(ScreenList())
         self.sm.add_widget(ScreenConfig())
         

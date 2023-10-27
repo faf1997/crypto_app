@@ -49,8 +49,8 @@ class Processing:
 
 class System:
     def __init__(self):
-        self.__internet_connection = False
-        self.__crypto_states: bool = True
+        self.__internet_connection: bool = False
+        self.__update_status: bool = False
         self.__async: Async = Async()
         self.__crypto_dict: dict = {
                             "bitcoin": "BTCUSDT",
@@ -76,10 +76,11 @@ class System:
                             }
 
 
-    # def check_internet_connection(self):
-    #     def update_connection_status():
-    #         if 
-    #             self.__async.is_finish()
+    def check_internet_connection(self):
+        check_internet_connection()
+        self.__internet_connection  = check_internet_connection()
+        
+
 
 
 
@@ -88,6 +89,8 @@ class System:
         returns the symbol of the cryptocurrency
         indicating its name
         '''
+        if not name_crypto in self.__crypto_dict:
+            raise ValueError("Crypto name is not in the list")
         return self.__crypto_dict[name_crypto]
 
 
@@ -102,7 +105,7 @@ class System:
         check if the cryptocurrency update
         is activated or deactivated
         '''
-        return self.__crypto_states
+        return self.__update_status
 
 
     @update_cryptos.setter
@@ -111,7 +114,9 @@ class System:
         activate and deactivate the updating
         of cryptocurrency prices
         '''
-        self.__crypto_states = value
+        if not isinstance(value,(bool)):
+            raise ValueError("Only boolean values ​​are accepted")
+        self.__update_status = value
 
 
     def get_crypto_names(self)-> list:

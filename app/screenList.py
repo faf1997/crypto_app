@@ -11,7 +11,7 @@ from system import Async
 
 Builder.load_string("""
 <DrawerClickableItem@MDNavigationDrawerItem>
-    #focus_color: "#2596be"
+    #focus_color: "#2596be" 
     text_color: "#000000"
     icon_color: "#000000"
     #ripple_color: "#c5bdd2"
@@ -36,7 +36,7 @@ Builder.load_string("""
 
 
 <ScreenList>:
-    name: 'screen_list'
+    name: 'screen_list' 
 
 #-------------------------------------------------------
     MDNavigationLayout:
@@ -78,6 +78,17 @@ Builder.load_string("""
                     right_text: ""
                     text_right_color: "#000000"
                     text: "Configs"
+                    on_release: 
+                        app.sm.current = "screen_config"
+                        app.sm.get_screen("screen_list").manager.transition.direction = "left"
+                        nav_drawer.set_state("close")
+                        app.sys.update_cryptos = False
+
+                DrawerClickableItem:
+                    icon: "plus-box"
+                    right_text: ""
+                    text_right_color: "#000000"
+                    text: "Add crypto"
                     on_release: 
                         app.sm.current = "screen_config"
                         app.sm.get_screen("screen_list").manager.transition.direction = "left"
