@@ -24,7 +24,7 @@ Builder.load_string("""
     height: "190dp"
 
     MDTextField:
-        hint_text: "crypto name"
+        hint_text: "Crypto name"
 
     MDTextField:
         hint_text: "Crypto symbol"
@@ -58,16 +58,15 @@ Builder.load_string("""
         PBoxLayout:
             MDScrollView:
                 MDList:
-                    ThreeLineAvatarListItem:
+                    TwoLineAvatarListItem:
                         text: "Crypto price update time:"
                         secondary_text: "1"
                         on_release:
                             app.sm.get_screen('screen_config').show_confirmation_dialog()
                         IconLeftWidget:
                             icon: "update"
-                    ThreeLineAvatarListItem:
+                    OneLineAvatarListItem:
                         text: "Add cryptos:"
-                        secondary_text: "1"
                         on_release:
                             app.sm.get_screen('screen_config').show_add_crypto()
                         IconLeftWidget:
@@ -101,7 +100,7 @@ class ScreenConfig(MDScreen):
     def show_add_crypto(self, *args):
         if not self.dialog_add_crypto:
             self.dialog_add_crypto = MDDialog(
-                title="Address:",
+                title="Complete crypto information:",
                 type="custom",
                 content_cls=Content(),
                 buttons=[

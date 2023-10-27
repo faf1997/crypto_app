@@ -84,16 +84,7 @@ Builder.load_string("""
                         nav_drawer.set_state("close")
                         app.sys.update_cryptos = False
 
-                DrawerClickableItem:
-                    icon: "plus-box"
-                    right_text: ""
-                    text_right_color: "#000000"
-                    text: "Add crypto"
-                    on_release: 
-                        app.sm.current = "screen_config"
-                        app.sm.get_screen("screen_list").manager.transition.direction = "left"
-                        nav_drawer.set_state("close")
-                        app.sys.update_cryptos = False
+
 
 """)
 
