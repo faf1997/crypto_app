@@ -61,7 +61,8 @@ class System:
                             "solana": "SOLUSDT",
                             "polkadot": "DOTUSDT",
                             "dogecoin": "DOGEUSDT",
-                            "litecoin": "LTCUSDT"
+                            "litecoin": "LTCUSDT",
+                            "monero": "XMRUSDT"
                             }
         self.__crypto_prices: dict = { #crypto price
                             "bitcoin": "---",
@@ -72,7 +73,8 @@ class System:
                             "solana": "---",
                             "polkadot": "---",
                             "dogecoin": "---",
-                            "litecoin": "---"
+                            "litecoin": "---",
+                            "monero": "---"
                             }
 
 
