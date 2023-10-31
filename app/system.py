@@ -1,4 +1,7 @@
-from utils import get_price_crypto_binance, check_internet_connection
+# import sys
+# sys.path.append("..")
+
+from utils import get_price_crypto_binance, check_internet_connection, read_json_file, write_json_file, download_img_png
 import threading
 
 
@@ -12,7 +15,6 @@ class Async:
         self.threads[name_job] = thread
         thread.start()
 
-    
 
     def is_finish(self):
         finish = True
@@ -21,6 +23,8 @@ class Async:
         if finish:
             self.threads = {}
         return finish
+
+
 
 
 class Processing:
@@ -44,6 +48,7 @@ class Processing:
 
         for result in results:
             print(result)
+
 
 
 
@@ -76,15 +81,19 @@ class System:
                             "litecoin": "---",
                             "monero": "---"
                             }
-
+        self.check_internet_connection()
 
     def check_internet_connection(self):
-        check_internet_connection()
-        self.__internet_connection  = check_internet_connection()
+        self.__async.add_job("check_internet_connection",self.__check_internet_connection())
         
 
 
 
+    def __check_internet_connection(self):
+        self.__internet_connection  = check_internet_connection()
+        self.__update_status = self.__internet_connection
+
+        
 
     def get_symbol_crypto(self, name_crypto):
         '''
@@ -169,18 +178,38 @@ class System:
         '''
         updates all prices of available cryptocurrencies
         '''
-        if self.update_cryptos:
+        if self.__internet_connection and self.update_cryptos:
             dict_prices = {}
             for crypto_name in self.__crypto_dict:
                 symbol = self.__crypto_dict[crypto_name]
-                self.__async.add_job(crypto_name, lambda: self.__set_result_request(crypto_name, symbol))
+                self.__async.add_job(
+                    crypto_name,
+                    lambda: self.__set_result_request(
+                        crypto_name,
+                        symbol
+                        )
+                    )
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 if __name__ == "__main__":
     sys = System()
-    sys.request_price_cryptos()
-    while True:
-        if sys.is_finishing_request_price_cryptos():            
-            break
+    # sys.request_price_cryptos()
+    # while True:
+    #     if sys.is_finishing_request_price_cryptos():
+    #         break
+    # print(sys.get_price_cryptos())
+
+
 

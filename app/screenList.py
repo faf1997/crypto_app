@@ -6,6 +6,8 @@ from kivy.clock import Clock
 
 from system import Async
 
+from kivy.properties import NumericProperty
+
 
 
 
@@ -37,7 +39,8 @@ Builder.load_string("""
 
 <ScreenList>:
     name: 'screen_list' 
-
+    
+            
 #-------------------------------------------------------
     MDNavigationLayout:
         MDScreenManager:
@@ -70,9 +73,6 @@ Builder.load_string("""
                     spacing: "4dp"
                     padding: "12dp", 0, 0, "56dp"
 
-                # MDNavigationDrawerLabel:
-                #     text: "Mail"
-
                 DrawerClickableItem:
                     icon: "cog"
                     right_text: ""
@@ -95,11 +95,10 @@ class ScreenList(MDScreen):
         super(ScreenList, self).__init__(**kwargs)
         self.__async = Async()
         self.__widgets_cryptos = MDApp.get_running_app().sys.get_price_cryptos()
-        self.__async.add_job("init_list",self.__init_list())
+        self.__async.add_job("init_list",self.__init_list_widgets())
 
         
-
-    def __init_list(self):
+    def __init_list_widgets(self):
         path = "imgs/"
         list_data = self.ids.get("list_data")
         cryptos = MDApp.get_running_app().sys.get_price_cryptos()

@@ -12,6 +12,10 @@ from customWidgets.itemConfirm import ItemConfirm
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 
+from kivy.graphics import *
+from kivy.uix.boxlayout import BoxLayout
+
+
 
 
 Builder.load_string("""
@@ -22,6 +26,8 @@ Builder.load_string("""
     spacing: "12dp"
     size_hint_y: None
     height: "190dp"
+    canvas.before:
+
 
     MDTextField:
         hint_text: "Crypto name"
@@ -45,11 +51,6 @@ Builder.load_string("""
     name: 'screen_config'
     MDBoxLayout:
         orientation: 'vertical'
-        # canvas.before:
-        # Rectangle:
-        #     # pos: self.pos
-        #     # size: self.size
-        #     # source: 'imgs/fondo.png'
         MDTopAppBar:
             elevation: 0
             title: "Configs"
@@ -77,8 +78,15 @@ Builder.load_string("""
 
 
 
-class Content(MDBoxLayout):
-    pass
+class Content(BoxLayout):
+    def __init__(self, **kwargs):
+        super(Content, self).__init__(**kwargs)
+        # with self.canvas:
+        #     Image(source='src/imgs/bg.png')
+        self.canvas.clear()
+        with self.canvas.before:
+            Color(1, 0, .4, mode='rgb')
+
 
 
 
