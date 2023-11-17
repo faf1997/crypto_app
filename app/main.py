@@ -5,9 +5,9 @@ from kivymd.uix.list import TwoLineListItem
 
 from system import System
 
-from splashScreen import SplashScreen
-from screenList import ScreenList
-from screenConfig import ScreenConfig
+from customWidgets.splashScreen import SplashScreen
+from customWidgets.screenList import ScreenList
+from customWidgets.screenConfig import ScreenConfig
 
 
 
