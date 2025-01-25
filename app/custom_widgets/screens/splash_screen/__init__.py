@@ -1,0 +1,1 @@
+from .splashScreen import SplashScreen

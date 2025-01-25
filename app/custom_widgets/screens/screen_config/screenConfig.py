@@ -8,7 +8,7 @@ from kivy.lang import Builder
 from kivy.clock import Clock
 
 
-from customWidgets.itemConfirm import ItemConfirm
+from custom_widgets.itemConfirm import ItemConfirm
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 

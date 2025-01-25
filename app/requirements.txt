@@ -1,5 +1,0 @@
-
-Kivy==2.2.1
-kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip#sha256=e55b90474afa09a6c971f4ef1cdf07a4e028d7e565d8165179b7fc9b8f6b4d1b
-requests==2.31.0
-

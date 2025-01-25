@@ -87,14 +87,11 @@ class System:
         self.__async.add_job("check_internet_connection",self.__check_internet_connection())
         
 
-
-
     def __check_internet_connection(self):
         self.__internet_connection  = check_internet_connection()
         self.__update_status = self.__internet_connection
 
         
-
     def get_symbol_crypto(self, name_crypto):
         '''
         returns the symbol of the cryptocurrency
