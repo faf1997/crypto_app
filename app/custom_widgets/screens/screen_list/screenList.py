@@ -14,19 +14,20 @@ from kivy.properties import NumericProperty
 Builder.load_string("""
 <DrawerClickableItem@MDNavigationDrawerItem>
     #focus_color: "#2596be" 
-    text_color: "#000000"
-    icon_color: "#000000"
+    text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
+    icon_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
     #ripple_color: "#c5bdd2"
     #selected_color: "#0c6c4d"
     radius:[0,0,0,0]
 
 
 <DrawerLabelItem@MDNavigationDrawerItem>
-    text_color: "#000000"
-    icon_color: "#000000"
+    text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
+    icon_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
     focus_behavior: False
     selected_color: "#ffffff"
     _no_ripple_effect: True
+
 
 
 #-------------------------------
@@ -51,7 +52,9 @@ Builder.load_string("""
                         title: "Cryptos"
                         elevation: 0
                         #pos_hint: {"top": 1}
-                        specific_text_color: "#ffffff"
+                        specific_text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
+                        
+                        
                         left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
                         right_action_items: [["dots-vertical", lambda x: None]]
                     PBoxLayout:
@@ -68,22 +71,23 @@ Builder.load_string("""
 
                 MDNavigationDrawerHeader:
                     title: "Crypto App"
-                    title_color: "#000000"
+                    title_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
                     text: "Menu"
                     spacing: "4dp"
                     padding: "12dp", 0, 0, "56dp"
 
                 DrawerClickableItem:
+                    id: item_config_button
                     icon: "cog"
                     right_text: ""
-                    text_right_color: "#000000"
+                    text_right_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
                     text: "Configs"
                     on_release: 
                         app.sm.current = "screen_config"
                         app.sm.get_screen("screen_list").manager.transition.direction = "left"
                         nav_drawer.set_state("close")
                         app.sys.update_cryptos = False
-
+                       
 
 
 """)

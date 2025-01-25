@@ -25,33 +25,6 @@ class Async:
         return finish
 
 
-
-
-class Processing:
-    def __init__(self):
-        self.processes = {}
-
-    def add_job(self, name_job, job):
-        process = Process(target=job)
-        self.processes[name_job] = process
-        process.start()
-
-    def is_finish(self):
-        finish = True
-        for name_job in self.processes:
-            finish = finish and not self.processes[name_job].is_alive()
-        if finish:
-            self.processes = {}
-        return finish
-
-        self.results = pool.map(get_price_crypto_binance, symbols)
-
-        for result in results:
-            print(result)
-
-
-
-
 class System:
     def __init__(self):
         self.__internet_connection: bool = False
@@ -92,6 +65,7 @@ class System:
         self.__update_status = self.__internet_connection
 
         
+
     def get_symbol_crypto(self, name_crypto):
         '''
         returns the symbol of the cryptocurrency

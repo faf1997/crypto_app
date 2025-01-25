@@ -1,5 +1,7 @@
 from kivymd.app import MDApp
 from kivy.clock import Clock
+from kivy.core.window import Window
+from plyer import notification
 from kivymd.uix.screenmanager import ScreenManager
 #from kivymd.uix.list import TwoLineListItem
 #from kivymd.theming import ThemeManager
@@ -14,7 +16,7 @@ class MyApp(MDApp):
     def __init__(self, *args, **kwargs):
         super(MyApp, self).__init__(*args, **kwargs)
         self.theme_cls.theme_style = "Dark"  # Tema claro por defecto
-        self.theme_cls.primary_palette = "Purple"
+        self.theme_cls.primary_palette = "Orange"
         self.sys = System()
         self.sm = ScreenManager()
         self.action_list = []
@@ -45,6 +47,38 @@ class MyApp(MDApp):
             screen_instance = screen()
             screen_instance.name = name
             self.sm.add_widget(screen_instance)
+
+
+    def lanzar_notificacion(self, titulo, mensaje):
+        notification.notify(title=titulo, message=mensaje)
+
+
+    def get_screen(self, nombre_pantalla):
+        return self.sm.get_screen(nombre_pantalla)
+
+
+    def get_widget(self, nombre_pantalla, nombre_widget):
+        pantalla = self.sm.get_screen(nombre_pantalla)
+        widget = pantalla.ids.get(nombre_widget)
+        return widget
+
+
+    def change_screen(self, pantalla_actual, pantalla_siguiente, direccion='left'):
+        """'up', 'down', 'left', 'right'"""
+        self.sm.transition.direction = direccion
+        self.sm.current = pantalla_siguiente
+
+
+    def get_image(self, nombre_image):
+        for path in self.path_imagenes:
+            if nombre_image in path:
+                return path
+        else:
+            return ''
+
+
+    def get_size_Screen(self):
+        return Window.size
 
 
     def build(self):

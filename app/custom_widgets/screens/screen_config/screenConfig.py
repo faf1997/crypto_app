@@ -21,7 +21,7 @@ from kivy.uix.boxlayout import BoxLayout
 Builder.load_string("""
 
 
-<Content>
+<Content@BoxLayout>:
     orientation: "vertical"
     spacing: "12dp"
     size_hint_y: None
@@ -54,6 +54,7 @@ Builder.load_string("""
         MDTopAppBar:
             elevation: 0
             title: "Configs"
+            specific_text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
             right_action_items: [["dots-vertical", lambda x: None]]
             left_action_items: [["arrow-left", lambda x: app.sm.get_screen('screen_config').current('screen_list')]]
         PBoxLayout:
@@ -79,21 +80,13 @@ Builder.load_string("""
 
 
 class Content(BoxLayout):
-    def __init__(self, **kwargs):
-        super(Content, self).__init__(**kwargs)
-        # with self.canvas:
-        #     Image(source='src/imgs/bg.png')
-        self.canvas.clear()
-        with self.canvas.before:
-            Color(1, 0, .4, mode='rgb')
-
-
-
+    def __init__(self, *args, **kwargs):
+        super(Content, self).__init__(*args, **kwargs)
 
 
 class ScreenConfig(MDScreen):
-    def __init__(self, **kwargs):
-        super(ScreenConfig, self).__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super(ScreenConfig, self).__init__(*args, **kwargs)
         self.dialog = None
         self.dialog_add_crypto = None
 
@@ -116,11 +109,13 @@ class ScreenConfig(MDScreen):
                         text="CANCEL",
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
+                        on_release=lambda x: self.dialog_add_crypto.dismiss(),
                     ),
                     MDFlatButton(
                         text="OK",
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
+                        on_release=lambda x: (self.dialog_add_crypto.dismiss(), print('OK')),
                     ),
                 ],
             )
@@ -128,31 +123,34 @@ class ScreenConfig(MDScreen):
 
 
     def show_confirmation_dialog(self, *args):
-                if not self.dialog:
-                    self.dialog = MDDialog(
-                        title="Select update time",
-                        type="confirmation",
-                        items=[
-                            ItemConfirm(text="1 sec."),
-                            ItemConfirm(text="5 sec."),
-                            ItemConfirm(text="30 sec."),
-                            ItemConfirm(text="1 min."),
-                            ItemConfirm(text="5 min."),
-                        ],
-                        buttons=[
-                            MDFlatButton(
-                                text="CANCEL",
-                                theme_text_color="Custom",
-                                text_color=self.theme_cls.primary_color,
-                            ),
-                            MDFlatButton(
-                                text="OK",
-                                theme_text_color="Custom",
-                                text_color=self.theme_cls.primary_color,
-                            ),
-                        ],
-                    )
-                self.dialog.open()
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Select update time",
+                type="confirmation",
+                items=[
+                    ItemConfirm(text="1 sec."),
+                    ItemConfirm(text="5 sec."),
+                    ItemConfirm(text="30 sec."),
+                    ItemConfirm(text="1 min."),
+                    ItemConfirm(text="5 min."),
+                ],
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL",
+                        theme_text_color="Custom",
+                        text_color=self.theme_cls.primary_color,
+                        on_release=lambda x: self.dialog.dismiss(),
+                    ),
+                    MDFlatButton(
+                        text="OK",
+                        theme_text_color="Custom",
+                        text_color=self.theme_cls.primary_color,
+                        on_release=lambda x: self.dialog.dismiss(),
+                    ),
+                ],
+            )
+        self.dialog.open()
+        
 
 
 
