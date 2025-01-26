@@ -30,12 +30,15 @@ Builder.load_string("""
 
 
     MDTextField:
+        id: crypto_name_field
         hint_text: "Crypto name"
 
     MDTextField:
+        id: crypto_symbol_field
         hint_text: "Crypto symbol"
     
     MDTextField:
+        id: crypto_image_url_field
         hint_text: "Crypto image url"
 
 
@@ -56,7 +59,8 @@ Builder.load_string("""
             title: "Configs"
             specific_text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
             right_action_items: [["dots-vertical", lambda x: None]]
-            left_action_items: [["arrow-left", lambda x: app.sm.get_screen('screen_config').current('screen_list')]]
+            left_action_items: [["arrow-left", lambda x: app.change_screen('screen_list', 'right')]]
+
         PBoxLayout:
             MDScrollView:
                 MDList:

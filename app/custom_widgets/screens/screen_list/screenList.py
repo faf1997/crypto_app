@@ -83,8 +83,7 @@ Builder.load_string("""
                     text_right_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
                     text: "Configs"
                     on_release: 
-                        app.sm.current = "screen_config"
-                        app.sm.get_screen("screen_list").manager.transition.direction = "left"
+                        app.change_screen('screen_config')
                         nav_drawer.set_state("close")
                         app.sys.update_cryptos = False
                        

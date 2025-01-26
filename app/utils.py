@@ -10,8 +10,6 @@ def download_img_png(url):
             file.write(response.content)
 
 
-
-
 def get_price_crypto_binance(symbol):
     url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
     response = requests.get(url)

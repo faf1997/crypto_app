@@ -63,7 +63,7 @@ class MyApp(MDApp):
         return widget
 
 
-    def change_screen(self, pantalla_actual, pantalla_siguiente, direccion='left'):
+    def change_screen(self, pantalla_siguiente, direccion='left'):
         """'up', 'down', 'left', 'right'"""
         self.sm.transition.direction = direccion
         self.sm.current = pantalla_siguiente

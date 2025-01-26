@@ -56,6 +56,17 @@ class System:
                             }
         self.check_internet_connection()
 
+    def add_crypto(self, name_crypto, symbol, url_image):
+        '''
+        add a new cryptocurrency to the list
+        '''
+        if name_crypto in self.__crypto_dict:
+            return 
+        self.__crypto_dict[name_crypto] = symbol
+        self.__crypto_prices[name_crypto] = "---"
+        download_img_png(url_image, name_crypto)
+
+
     def check_internet_connection(self):
         self.__async.add_job("check_internet_connection",self.__check_internet_connection())
         
@@ -97,7 +108,7 @@ class System:
         of cryptocurrency prices
         '''
         if not isinstance(value,(bool)):
-            raise ValueError("Only boolean values ​​are accepted")
+            raise ValueError("Only boolean values are accepted")
         self.__update_status = value
 
 
