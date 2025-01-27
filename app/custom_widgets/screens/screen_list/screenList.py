@@ -6,7 +6,7 @@ from kivy.clock import Clock
 
 from system import Async
 
-from kivy.properties import NumericProperty
+# from kivy.properties import NumericProperty
 
 
 
@@ -80,14 +80,29 @@ Builder.load_string("""
                     id: item_config_button
                     icon: "cog"
                     right_text: ""
-                    text_right_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
+                    # text_right_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
                     text: "Configs"
                     on_release: 
                         app.change_screen('screen_config')
                         nav_drawer.set_state("close")
                         app.sys.update_cryptos = False
                        
-
+    MDFloatLayout:
+        MDAnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+            padding: 50
+            spacing: 50
+            # MDFloatingActionButton:
+            MDIconButton:
+                elevation: 0
+                icon: "plus"
+                # set_radius: 10, 10, 10, 10
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                # on_type: 'small'
+                md_bg_color: app.theme_cls.primary_color
+                icon_size: "32sp"
+                on_release: app.get_screen('screen_config').show_add_crypto()
 
 """)
 
@@ -98,29 +113,50 @@ class ScreenList(MDScreen):
         super(ScreenList, self).__init__(**kwargs)
         self.__async = Async()
         self.__widgets_cryptos = MDApp.get_running_app().sys.get_price_cryptos()
-        self.__async.add_job("init_list",self.__init_list_widgets())
+        self.__async.add_job("init_list", self.__init_list_widgets())
 
-        
+
     def __init_list_widgets(self):
-        path = "imgs/"
+        img_paths =  MDApp.get_running_app().sys.get_images_path()
         list_data = self.ids.get("list_data")
         cryptos = MDApp.get_running_app().sys.get_price_cryptos()
+        
         for key in cryptos:
-            line = ThreeLineAvatarListItem(
-                                            text=key.title(),
-                                            secondary_text=f"USD {cryptos[key]}",
-                                            tertiary_text=f""
-                                            )
-            self.__widgets_cryptos[key] = line
-            line.add_widget(IconLeftWidget(icon=f"{path}{key}.png"))
-            list_data.add_widget(line)
+            if key in self.__widgets_cryptos:
+                line = ThreeLineAvatarListItem(
+                    text=key.upper(),
+                    secondary_text=f"USD {cryptos[key]}",
+                    tertiary_text=f""
+                )
+                self.__widgets_cryptos[key] = line
+                line.add_widget(IconLeftWidget(icon=img_paths[key]))
+                list_data.add_widget(line)
+            else:
+                print(f"1) Error: {key} not found in widgets cryptos")
+                
         self.update_price = Clock.schedule_interval(lambda x: self.func_update_price(), 1)
         self.__async.is_finish()
 
 
+    # def add_crypto(self, symbol):
+        
+    #     line = ThreeLineAvatarListItem(
+    #         text=symbol.upper(),
+    #         secondary_text=f"USD {cryptos[symbol]}",
+    #         tertiary_text=f""
+    #     )
+    #     self.__widgets_cryptos[symbol] = line
+    #     line.add_widget(IconLeftWidget(icon=img_paths[key]))
+    #     list_data.add_widget(line)
+
+
     def update_price_widgets(self, dict_cryptos: dict):
         for key in dict_cryptos:
-            self.__widgets_cryptos[key].secondary_text = f'USD {dict_cryptos[key]}'
+            if key in self.__widgets_cryptos:
+                self.__widgets_cryptos[key].secondary_text = f'USD {dict_cryptos[key]}'
+            else:
+                print(f"2) Error: {key} not found in widgets cryptos")
+
 
 
     def func_update_price(self):
@@ -128,7 +164,7 @@ class ScreenList(MDScreen):
         if app.sys.is_finishing_request_price_cryptos():
             self.update_price_widgets(app.sys.get_price_cryptos())
             prices = app.sys.request_price_cryptos()
-        
+
 
 
 

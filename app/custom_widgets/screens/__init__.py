@@ -4,7 +4,7 @@ from .splash_screen import SplashScreen
 
 
 SCREENS = [
-    ('splash_screen', SplashScreen),
-    ('screen_config', ScreenConfig),
+    #('splash_screen', SplashScreen),
     ('screen_list', ScreenList),
+    ('screen_config', ScreenConfig),
 ]

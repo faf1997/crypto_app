@@ -1,9 +1,9 @@
 # import sys
 # sys.path.append("..")
 
-from utils import get_price_crypto_binance, check_internet_connection, read_json_file, write_json_file, download_img_png
+from utils import get_price_crypto_binance, check_internet_connection, read_json_file, write_json_file, download_image
 import threading
-
+import os
 
 class Async:
     def __init__(self):
@@ -30,62 +30,67 @@ class System:
         self.__internet_connection: bool = False
         self.__update_status: bool = False
         self.__async: Async = Async()
-        self.__crypto_dict: dict = {
-                            "bitcoin": "BTCUSDT",
-                            "ethereum": "ETHUSDT",
-                            "binance coin": "BNBUSDT",
-                            "ripple": "XRPUSDT",
-                            "cardano": "ADAUSDT",
-                            "solana": "SOLUSDT",
-                            "polkadot": "DOTUSDT",
-                            "dogecoin": "DOGEUSDT",
-                            "litecoin": "LTCUSDT",
-                            "monero": "XMRUSDT"
-                            }
-        self.__crypto_prices: dict = { #crypto price
-                            "bitcoin": "---",
-                            "ethereum": "---",
-                            "binance coin": "---",
-                            "ripple": "---",
-                            "cardano": "---",
-                            "solana": "---",
-                            "polkadot": "---",
-                            "dogecoin": "---",
-                            "litecoin": "---",
-                            "monero": "---"
-                            }
+        absolut_path = os.path.abspath(__file__)
+        self.__crypto_data = read_json_file("app/data/crypto_data.json")
+        self.__configs = read_json_file("app/data/configs.json")
         self.check_internet_connection()
 
-    def add_crypto(self, name_crypto, symbol, url_image):
+
+    # "ADA": {
+    #     "par": "ADAUSDT",
+    #     "name": "cardano",
+    #     "image": "images/cardano.png",
+    #     "symbol": "ADA",
+    #     "price": "0.9683"
+    # },
+
+    def add_crypto(self, name, symbol, url_image):
         '''
-        add a new cryptocurrency to the list
+        Add a new cryptocurrency to the list
         '''
-        if name_crypto in self.__crypto_dict:
-            return 
-        self.__crypto_dict[name_crypto] = symbol
-        self.__crypto_prices[name_crypto] = "---"
-        download_img_png(url_image, name_crypto)
+        path_img = download_image(url_image, "app/images/")
+        self.__crypto_data[symbol] = {
+            'par': f'{symbol.upper()}USDT',
+            'price': '---',
+            'image': path_img,
+            'symbol': symbol.upper(),
+            'name': name
+        }
+        self.save_data()
+
+    def get_theme_mode(self):
+        return self.__configs['theme_mode']
+    
+    
+    def get_refresh_time(self):
+        return self.__configs['refresh_time']
 
 
     def check_internet_connection(self):
         self.__async.add_job("check_internet_connection",self.__check_internet_connection())
-        
+
 
     def __check_internet_connection(self):
         self.__internet_connection  = check_internet_connection()
         self.__update_status = self.__internet_connection
 
-        
 
-    def get_symbol_crypto(self, name_crypto):
-        '''
-        returns the symbol of the cryptocurrency
-        indicating its name
-        '''
-        if not name_crypto in self.__crypto_dict:
-            raise ValueError("Crypto name is not in the list")
-        return self.__crypto_dict[name_crypto]
+    def clear_prices(self):
+        for key in self.__crypto_data:
+            self.__crypto_data[key]['price'] = '---'
+    
+    
+    def save_data(self):
+        write_json_file(self.__crypto_data, "app/data/crypto_data.json")
 
+    def get_images_path(self):
+        '''
+        returns the path to the images of the available cryptocurrencies
+        '''
+        paths = {}
+        for key in self.__crypto_data:
+            paths[key] = self.__crypto_data[key]['image']
+        return paths
 
     @property
     def internet_connection(self)-> bool:
@@ -117,7 +122,7 @@ class System:
         returns a list of the names
         of the available cryptocurrencies
         '''
-        return [key for key in self.__crypto_dict]
+        return [self.__crypto_data[key]['name'] for key in self.__crypto_data]
     
 
     def get_crypto_symbols(self)-> list:
@@ -125,7 +130,7 @@ class System:
         returns a list of symbols available
         to check cryptocurrency prices on binance
         '''
-        return [self.__crypto_dict[key] for key in self.__crypto_dict]
+        return [self.__crypto_data[key]['par'] for key in self.__crypto_data]
 
 
     def get_price_cryptos(self):
@@ -135,7 +140,10 @@ class System:
         self.request_price_cryptos(), and check the
         update status with self.is_finishing_request_price_cryptos()
         '''
-        return self.__crypto_prices.copy()
+        prices = {}
+        for key in self.__crypto_data:
+            prices[key] = self.__crypto_data[key]['price']
+        return prices
 
 
     def __set_result_request(self,crypto_name, symbol):
@@ -144,7 +152,7 @@ class System:
         upon completion of the asynchronous price query
         '''
         try:
-            self.__crypto_prices[crypto_name] = f'{get_price_crypto_binance(symbol)}'
+            self.__crypto_data[crypto_name]['price'] = f'{get_price_crypto_binance(symbol)}'
         except:
             self.__internet_connection = False
 
@@ -162,13 +170,12 @@ class System:
         '''
         if self.__internet_connection and self.update_cryptos:
             dict_prices = {}
-            for crypto_name in self.__crypto_dict:
-                symbol = self.__crypto_dict[crypto_name]
+            for key in self.__crypto_data:
                 self.__async.add_job(
-                    crypto_name,
+                    key,
                     lambda: self.__set_result_request(
-                        crypto_name,
-                        symbol
+                        key,
+                        self.__crypto_data[key]['par']
                         )
                     )
 

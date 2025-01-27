@@ -1,0 +1,86 @@
+{
+    "BTC": {
+        "par": "BTCUSDT",
+        "name": "bitcoin",
+        "image": "images/bitcoin.webp",
+        "symbol": "BTC",
+        "price": "102408.6"
+    },
+    "ETH": {
+        "par": "ETHUSDT",
+        "name": "ethereum",
+        "image": "images/ethereum.png",
+        "symbol": "ETH",
+        "price": "3218.26"
+    },
+    "BNB": {
+        "par": "BNBUSDT",
+        "name": "binance coin",
+        "image": "images/binance_coin.png",
+        "symbol": "BNB",
+        "price": "665.12"
+    },
+    "XRP": {
+        "par": "XRPUSDT",
+        "name": "ripple",
+        "image": "images/ripple.png",
+        "symbol": "XRP",
+        "price": "2.9955"
+    },
+    "ADA": {
+        "par": "ADAUSDT",
+        "name": "cardano",
+        "image": "images/cardano.png",
+        "symbol": "ADA",
+        "price": "0.9429"
+    },
+    "SOL": {
+        "par": "SOLUSDT",
+        "name": "solana",
+        "image": "images/solana.png",
+        "symbol": "SOL",
+        "price": "238.53"
+    },
+    "DOT": {
+        "par": "DOTUSDT",
+        "name": "polkadot",
+        "image": "images/polkadot.png",
+        "symbol": "DOT",
+        "price": "6.118"
+    },
+    "DOGE": {
+        "par": "DOGEUSDT",
+        "name": "dogecoin",
+        "image": "images/dogecoin.png",
+        "symbol": "DOGE",
+        "price": "0.3325"
+    },
+    "LTC": {
+        "par": "LTCUSDT",
+        "name": "litecoin",
+        "image": "images/litecoin.png",
+        "symbol": "LTC",
+        "price": "116.32"
+    },
+    "XMR": {
+        "par": "XMRUSDT",
+        "name": "monero",
+        "image": "images/monero.png",
+        "symbol": "XMR",
+        "price": "118.7"
+    },
+    "LINK": {
+        "par": "LINKUSDT",
+        "price": "24.68",
+        "image": "images/chainlink.png",
+        "symbol": "LINK",
+        "name": "chainlink"
+    },
+    "PEPE": {
+        "par": "PEPEUSDT",
+        "price": "---",
+        "image": "",
+        "symbol": "PEPE",
+        "name": "PEPE"
+    }
+}

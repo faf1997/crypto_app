@@ -2,6 +2,7 @@ from kivymd.app import MDApp
 from kivy.clock import Clock
 from kivy.core.window import Window
 from plyer import notification
+import os
 from kivymd.uix.screenmanager import ScreenManager
 #from kivymd.uix.list import TwoLineListItem
 #from kivymd.theming import ThemeManager
@@ -22,6 +23,10 @@ class MyApp(MDApp):
         self.action_list = []
         self.clock = Clock.schedule_interval( self.run_action, 0.01)
 
+    def on_stop(self):
+        self.sys.clear_prices()
+        self.save_data()
+        return super().on_stop()
 
     def add_action(self, function, action='d'):
         if action not in ['d', 'c']:
@@ -64,7 +69,7 @@ class MyApp(MDApp):
 
 
     def change_screen(self, pantalla_siguiente, direccion='left'):
-        """'up', 'down', 'left', 'right'"""
+        """Direction: 'up', 'down', 'left', 'right'"""
         self.sm.transition.direction = direccion
         self.sm.current = pantalla_siguiente
 

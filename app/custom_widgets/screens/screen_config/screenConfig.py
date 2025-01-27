@@ -32,14 +32,17 @@ Builder.load_string("""
     MDTextField:
         id: crypto_name_field
         hint_text: "Crypto name"
+        widget: "crypto_name_field"
 
     MDTextField:
         id: crypto_symbol_field
         hint_text: "Crypto symbol"
+        widget: "crypto_symbol_field"
     
     MDTextField:
         id: crypto_image_url_field
         hint_text: "Crypto image url"
+        widget: "crypto_image_url_field"
 
 
 <PBoxLayout@MDBoxLayout>:
@@ -78,6 +81,13 @@ Builder.load_string("""
                         IconLeftWidget:
                             icon: "plus"
 
+                    OneLineAvatarListItem:
+                        text: "Press light mode" if app.theme_cls.theme_style == "Dark" else "Press dark mode"
+                        on_release:
+                            app.theme_cls.theme_style = "Light" if app.theme_cls.theme_style == "Dark" else "Dark"
+                        IconLeftWidget:
+                            icon: "weather-sunny" if app.theme_cls.theme_style == "Dark" else "weather-night"
+
 """)
 
 
@@ -86,6 +96,9 @@ Builder.load_string("""
 class Content(BoxLayout):
     def __init__(self, *args, **kwargs):
         super(Content, self).__init__(*args, **kwargs)
+        
+    def get_childrens(self):
+        return self.children
 
 
 class ScreenConfig(MDScreen):
@@ -94,12 +107,27 @@ class ScreenConfig(MDScreen):
         self.dialog = None
         self.dialog_add_crypto = None
 
-
-    def current(self, *args):
+    def search_widget(self, widget, name):
+        for w in widget.children:
+            if w.widget == name:
+                return w
+        return None
+    
+    def add_crypto(self,content, *args):
         app = MDApp.get_running_app()
-        app.sm.current = "screen_list"
-        app.sm.get_screen("screen_list").manager.transition.direction = "right"
-        app.sys.update_cryptos = True
+        crypto_name_field = self.search_widget(content, 'crypto_name_field')
+        crypto_symbol_field = self.search_widget(content, 'crypto_symbol_field')
+        crypto_image_url_field = self.search_widget(content, 'crypto_image_url_field')
+        # print(crypto_name_field.text, crypto_symbol_field.text, crypto_image_url_field.text)
+        app.sys.add_crypto(crypto_name_field.text, crypto_symbol_field.text, crypto_image_url_field.text)
+        # app.sys.update_cryptos = True
+
+
+    # def current(self,  *args):
+    #     app = MDApp.get_running_app()
+    #     app.sm.current = "screen_list"
+    #     app.sm.get_screen("screen_list").manager.transition.direction = "right"
+    #     app.sys.update_cryptos = True
 
 
     def show_add_crypto(self, *args):
@@ -119,7 +147,7 @@ class ScreenConfig(MDScreen):
                         text="OK",
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
-                        on_release=lambda x: (self.dialog_add_crypto.dismiss(), print('OK')),
+                        on_release=lambda x: (self.add_crypto(self.dialog_add_crypto.content_cls)),# self.dialog_add_crypto.dismiss()),
                     ),
                 ],
             )
