@@ -1,9 +1,10 @@
 from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.navigationdrawer import MDNavigationDrawerItem
 from kivymd.uix.list import IconLeftWidget, ThreeLineAvatarListItem
 from kivy.lang import Builder
 from kivy.clock import Clock
-
+from kivy.utils import get_color_from_hex
 from system import Async
 
 # from kivy.properties import NumericProperty
@@ -12,21 +13,22 @@ from system import Async
 
 
 Builder.load_string("""
-<DrawerClickableItem@MDNavigationDrawerItem>
-    #focus_color: "#2596be" 
-    text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
-    icon_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
+<DrawerClickableItem>:
+    #focus_color: "#2596be" get_color_from_hex("#FF0000") 
+    # text_color: get_color_from_hex("#000000") if app.theme_cls.theme_style == "Light" else get_color_from_hex("#ffffff")
+    # icon_color: get_color_from_hex("#000000") if app.theme_cls.theme_style == "Light" else get_color_from_hex("#ffffff")
     #ripple_color: "#c5bdd2"
-    #selected_color: "#0c6c4d"
+    # selected_color: "#000000" if app.theme_cls.theme_style == "Dark" else "#ffffff"
     radius:[0,0,0,0]
+    theme_text_color: "Primary"
 
 
-<DrawerLabelItem@MDNavigationDrawerItem>
-    text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
-    icon_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
-    focus_behavior: False
-    selected_color: "#ffffff"
-    _no_ripple_effect: True
+# <DrawerLabelItem@MDNavigationDrawerItem>
+#     text_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
+#     icon_color: "#000000" if app.theme_cls.theme_style == "Light" else "#ffffff"
+#     focus_behavior: False
+#     # selected_color: "#ffffff"
+#     _no_ripple_effect: True
 
 
 
@@ -106,6 +108,11 @@ Builder.load_string("""
 
 """)
 
+
+
+class DrawerClickableItem(MDNavigationDrawerItem):
+    def __init__(self, *args, **kwargs):
+        super(MDNavigationDrawerItem, self).__init__(*args, **kwargs)
 
 
 class ScreenList(MDScreen):

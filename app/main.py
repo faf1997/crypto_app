@@ -16,7 +16,7 @@ from custom_widgets import THEME_COLORS
 class MyApp(MDApp):
     def __init__(self, *args, **kwargs):
         super(MyApp, self).__init__(*args, **kwargs)
-        self.theme_cls.theme_style = "Dark"  # Tema claro por defecto
+        self.theme_cls.theme_style = "Light"  # Tema claro por defecto
         self.theme_cls.primary_palette = "Orange"
         self.sys = System()
         self.sm = ScreenManager()

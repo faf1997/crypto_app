@@ -85,6 +85,7 @@ Builder.load_string("""
                         text: "Press light mode" if app.theme_cls.theme_style == "Dark" else "Press dark mode"
                         on_release:
                             app.theme_cls.theme_style = "Light" if app.theme_cls.theme_style == "Dark" else "Dark"
+                            # app.theme_cls.text_color = "#ffffff" if app.theme_cls.theme_style == "Dark" else "#000000" 
                         IconLeftWidget:
                             icon: "weather-sunny" if app.theme_cls.theme_style == "Dark" else "weather-night"
 
