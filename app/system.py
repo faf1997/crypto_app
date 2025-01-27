@@ -35,14 +35,16 @@ class System:
         self.__configs = read_json_file("app/data/configs.json")
         self.check_internet_connection()
 
+    @property
+    def theme_mode(self):
+        return self.__configs['theme_mode']
+    
+    
+    @theme_mode.setter
+    def theme_mode(self, theme_mode):
+        self.__configs['theme_mode'] = theme_mode
+        self.save_data()
 
-    # "ADA": {
-    #     "par": "ADAUSDT",
-    #     "name": "cardano",
-    #     "image": "images/cardano.png",
-    #     "symbol": "ADA",
-    #     "price": "0.9683"
-    # },
 
     def add_crypto(self, name, symbol, url_image):
         '''
@@ -82,6 +84,7 @@ class System:
     
     def save_data(self):
         write_json_file(self.__crypto_data, "app/data/crypto_data.json")
+        write_json_file(self.__configs, "app/data/configs.json")
 
     def get_images_path(self):
         '''

@@ -13,20 +13,30 @@ from custom_widgets import THEME_COLORS
 
 
 
+
+
+
+    
+
+
+
 class MyApp(MDApp):
     def __init__(self, *args, **kwargs):
         super(MyApp, self).__init__(*args, **kwargs)
-        self.theme_cls.theme_style = "Light"  # Tema claro por defecto
-        self.theme_cls.primary_palette = "Orange"
         self.sys = System()
+        self.theme_cls.theme_style = self.sys.get_theme_mode()  # Tema claro por defecto
+        self.theme_cls.primary_palette = "Orange"
         self.sm = ScreenManager()
         self.action_list = []
-        self.clock = Clock.schedule_interval( self.run_action, 0.01)
+        self.clock = Clock.schedule_interval( self.run_action, 1)
+
 
     def on_stop(self):
+        self.sys.theme_mode = self.theme_cls.theme_style
         self.sys.clear_prices()
         self.sys.save_data()
         return super().on_stop()
+
 
     def add_action(self, function, action='d'):
         if action not in ['d', 'c']:
