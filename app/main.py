@@ -25,7 +25,7 @@ class MyApp(MDApp):
 
     def on_stop(self):
         self.sys.clear_prices()
-        self.save_data()
+        self.sys.save_data()
         return super().on_stop()
 
     def add_action(self, function, action='d'):

@@ -4,74 +4,74 @@
         "name": "bitcoin",
         "image": "images/bitcoin.webp",
         "symbol": "BTC",
-        "price": "102408.6"
+        "price": "---"
     },
     "ETH": {
         "par": "ETHUSDT",
         "name": "ethereum",
         "image": "images/ethereum.png",
         "symbol": "ETH",
-        "price": "3218.26"
+        "price": "---"
     },
     "BNB": {
         "par": "BNBUSDT",
         "name": "binance coin",
         "image": "images/binance_coin.png",
         "symbol": "BNB",
-        "price": "665.12"
+        "price": "---"
     },
     "XRP": {
         "par": "XRPUSDT",
         "name": "ripple",
         "image": "images/ripple.png",
         "symbol": "XRP",
-        "price": "2.9955"
+        "price": "---"
     },
     "ADA": {
         "par": "ADAUSDT",
         "name": "cardano",
         "image": "images/cardano.png",
         "symbol": "ADA",
-        "price": "0.9429"
+        "price": "---"
     },
     "SOL": {
         "par": "SOLUSDT",
         "name": "solana",
         "image": "images/solana.png",
         "symbol": "SOL",
-        "price": "238.53"
+        "price": "---"
     },
     "DOT": {
         "par": "DOTUSDT",
         "name": "polkadot",
         "image": "images/polkadot.png",
         "symbol": "DOT",
-        "price": "6.118"
+        "price": "---"
     },
     "DOGE": {
         "par": "DOGEUSDT",
         "name": "dogecoin",
         "image": "images/dogecoin.png",
         "symbol": "DOGE",
-        "price": "0.3325"
+        "price": "---"
     },
     "LTC": {
         "par": "LTCUSDT",
         "name": "litecoin",
         "image": "images/litecoin.png",
         "symbol": "LTC",
-        "price": "116.32"
+        "price": "---"
     },
     "XMR": {
         "par": "XMRUSDT",
         "name": "monero",
         "image": "images/monero.png",
         "symbol": "XMR",
-        "price": "118.7"
+        "price": "---"
     },
     "LINK": {
         "par": "LINKUSDT",
-        "price": "24.68",
+        "price": "---",
         "image": "images/chainlink.png",
         "symbol": "LINK",
         "name": "chainlink"
