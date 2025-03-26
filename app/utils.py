@@ -45,16 +45,19 @@ def download_image(url, save_folder="images"):
         return ''
 
 
-def get_price_crypto_binance(symbol):
-    url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        price = float(data.get("price"))
+# def get_price_crypto_binance(symbol):
+#     url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}"
+#     response = requests.get(url)
+#     if response.status_code == 200:
+#         data = response.json()
+#         price = float(data.get("price"))
         
-        return price
-    else:
-        return None
+#         return price
+#     else:
+#         return None
+    
+    
+
 
 
 def check_internet_connection() -> bool:
@@ -79,4 +82,56 @@ def write_json_file(data, file_path):
 
 
 
+def get_price_crypto_binance(symbols):
+    if isinstance(symbols, str):
+        # Consultar un solo símbolo
+        url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbols}"
+        response = requests.get(url)
+    elif isinstance(symbols, list):
+        # Consultar múltiples símbolos
+        url = "https://api.binance.com/api/v3/ticker/price"
+        cryptos = [s for s in symbols]
+        
+        # params = {'symbols': '["' + '","'.join(symbols) + '"]'}  # Formato correcto para la API
+        # headers = {'Content-Type': 'application/json'}
+        response = requests.get(f'{url}')#?symbols{cryptos}'
+        print(symbols)
+    else:
+        return None
 
+    if response.status_code == 200:
+        data = response.json()
+        if isinstance(data, list):
+            # Múltiples símbolos: devuelve un diccionario {símbolo: precio}
+            return {item['symbol']: float(item['price']) for item in data}
+        else:
+            # Un solo símbolo: devuelve el precio como float
+            return float(data['price'])
+    else:
+        return None
+
+
+if __name__ == '__main__':
+    #     "PEPE": {
+    #     "par": "PEPEUSDT",
+    #     "price": "---",
+    #     "image": "",
+    #     "symbol": "PEPE",
+    #     "name": "PEPE"
+    # }
+    precios = get_price_crypto_binance(['BTCUSDT', 'ETHUSDT', 'BNBUSDT'])
+    data = {}
+    # print(len(precios))
+    for crypto in precios:
+        # print(f"{crypto}: {precios[crypto]}")
+        data[crypto] = {
+            "par": f"{crypto}USDT",
+            "price": precios[crypto],
+            "image": "",
+            "symbol": crypto,
+            "name": crypto
+        }
+        if len(data) == 100:
+            break
+    write_json_file(data, "app/data/crypto_data.json")
+    # print(precios)
